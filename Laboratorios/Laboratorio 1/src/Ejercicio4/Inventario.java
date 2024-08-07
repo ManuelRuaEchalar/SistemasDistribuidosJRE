@@ -60,7 +60,6 @@ public class Inventario {
             System.out.print("Ingrese el procesador de la laptop: ");
             String procesador = scanner.nextLine();
 
-            // Crear y devolver un objeto Laptop
             Producto producto = new Laptop(memoriaRam, procesador, 0, nombre, marca, modelo, tipo, descripcion, stock, precio, des);
             laptopDAO.insertar((Laptop) producto);
         } else if (tipo.equals("telefono")) {
@@ -74,7 +73,6 @@ public class Inventario {
             System.out.print("Ingrese la version de android del telefono: ");
             String versionAndroid = scanner.nextLine();
 
-            // Crear y devolver un objeto Laptop
             Producto producto = new Telefono(memoriaRam, procesador, versionAndroid, 0, nombre, marca, modelo, tipo, descripcion, stock, precio, des);
             telefonoDAO.insertar((Telefono) producto);
         } else if (tipo.equals("televisor")) {
@@ -126,20 +124,14 @@ public class Inventario {
     public List<Producto> listarProductos() {
         List<Producto> listaProductos = new ArrayList<>();
 
-        // Obtener la lista de laptops desde el LaptopDAO
+       
         List<Laptop> listaLaptops = laptopDAO.listar();
         List<Telefono> listaTel = telefonoDAO.listar();
         List<Televisor> listaTeles = televisorDAO.listar();
 
-        // Añadir cada Laptop a la lista de productos
         listaProductos.addAll(listaLaptops);
         listaProductos.addAll(listaTel);
         listaProductos.addAll(listaTeles);
-
-        // Si en el futuro tienes otros tipos de productos, puedes añadirlos aquí
-        // Por ejemplo:
-        // List<OtroProducto> listaOtrosProductos = otroProductoDAO.listar();
-        // listaProductos.addAll(listaOtrosProductos);
 
         return listaProductos;
     }

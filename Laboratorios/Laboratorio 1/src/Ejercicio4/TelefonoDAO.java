@@ -26,7 +26,7 @@ public class TelefonoDAO {
     String productoSQL = "INSERT INTO Producto (nombre, marca, modelo, tipo, descripcion, stock, precio, descuento, precioFinal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
-        // Preparar el Statement para devolver las claves generadas
+        
         PreparedStatement instruccionProducto = conexion.prepareStatement(productoSQL, Statement.RETURN_GENERATED_KEYS);
         instruccionProducto.setString(1, telefono.getNombre());
         instruccionProducto.setString(2, telefono.getMarca());
@@ -41,20 +41,20 @@ public class TelefonoDAO {
         int filasAfectadas = instruccionProducto.executeUpdate(); // Ejecutar la inserción en Producto
 
         if (filasAfectadas > 0) {
-            // Obtener el ID generado
+            
             ResultSet generatedKeys = instruccionProducto.getGeneratedKeys();
             if (generatedKeys.next()) {
-                int productoId = generatedKeys.getInt(1); // Obtener el ID generado
+                int productoId = generatedKeys.getInt(1); 
 
                 // Insertar en la tabla Laptop
                 String laptopSQL = "INSERT INTO Telefono (producto_id, memoriaRam, procesador, versionAndroid) VALUES (?, ?, ?, ?)";
                 PreparedStatement instruccionLaptop = conexion.prepareStatement(laptopSQL);
-                instruccionLaptop.setInt(1, productoId); // Usar el ID del producto
+                instruccionLaptop.setInt(1, productoId); 
                 instruccionLaptop.setInt(2, telefono.getMemoriaRam());
                 instruccionLaptop.setString(3, telefono.getProcesador());
                 instruccionLaptop.setString(4, telefono.getVersionAndroid());
 
-                instruccionLaptop.executeUpdate(); // Ejecutar la inserción en Laptop
+                instruccionLaptop.executeUpdate(); 
                 System.out.println("Telefono agregado exitosamente.");
             }
         }
@@ -66,7 +66,7 @@ public class TelefonoDAO {
 }
 
     public void eliminarTelefono(int id) {
-    // Paso 1: Obtener el stock actual
+    
     String selectSQL = "SELECT stock FROM Producto WHERE id = ?";
     int stockActual = 0;
 
@@ -78,12 +78,12 @@ public class TelefonoDAO {
             stockActual = rs.getInt("stock");
         }
 
-        // Paso 2: Restar uno al stock
+       
         stockActual -= 1;
 
-        // Paso 3: Actualizar el stock o eliminar el producto
+        
         if (stockActual > 0) {
-            // Actualizar el stock
+            
             String updateSQL = "UPDATE Producto SET stock = ? WHERE id = ?";
             PreparedStatement updateStmt = conexion.prepareStatement(updateSQL);
             updateStmt.setInt(1, stockActual);
@@ -91,7 +91,7 @@ public class TelefonoDAO {
             updateStmt.executeUpdate();
             System.out.println("Stock actualizado exitosamente.");
         } else {
-            // Eliminar de Laptop y Producto si el stock es 0
+            
             String deleteLaptopSQL = "DELETE FROM Telefono WHERE producto_id = ?";
             PreparedStatement deleteLaptopStmt = conexion.prepareStatement(deleteLaptopSQL);
             deleteLaptopStmt.setInt(1, id);
@@ -121,7 +121,7 @@ public class TelefonoDAO {
             Statement instruccion = conexion.createStatement();
             ResultSet resultado = instruccion.executeQuery(sql);
             while (resultado.next()) {
-                // Crear el objeto Laptop con todos los datos necesarios
+                
                 Telefono telefono = new Telefono(
                     resultado.getInt("memoriaRam"),
                     resultado.getString("procesador"),

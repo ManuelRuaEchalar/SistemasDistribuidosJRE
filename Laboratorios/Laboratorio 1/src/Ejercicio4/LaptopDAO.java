@@ -27,7 +27,6 @@ public class LaptopDAO {
     String productoSQL = "INSERT INTO Producto (nombre, marca, modelo, tipo, descripcion, stock, precio, descuento, precioFinal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
-        // Preparar el Statement para devolver las claves generadas
         PreparedStatement instruccionProducto = conexion.prepareStatement(productoSQL, Statement.RETURN_GENERATED_KEYS);
         instruccionProducto.setString(1, laptop.getNombre());
         instruccionProducto.setString(2, laptop.getMarca());
@@ -42,19 +41,19 @@ public class LaptopDAO {
         int filasAfectadas = instruccionProducto.executeUpdate(); // Ejecutar la inserción en Producto
 
         if (filasAfectadas > 0) {
-            // Obtener el ID generado
+
             ResultSet generatedKeys = instruccionProducto.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int productoId = generatedKeys.getInt(1); // Obtener el ID generado
 
-                // Insertar en la tabla Laptop
+                
                 String laptopSQL = "INSERT INTO Laptop (producto_id, memoriaRam, procesador) VALUES (?, ?, ?)";
                 PreparedStatement instruccionLaptop = conexion.prepareStatement(laptopSQL);
-                instruccionLaptop.setInt(1, productoId); // Usar el ID del producto
+                instruccionLaptop.setInt(1, productoId); 
                 instruccionLaptop.setInt(2, laptop.getMemoriaRam());
                 instruccionLaptop.setString(3, laptop.getProcesador());
 
-                instruccionLaptop.executeUpdate(); // Ejecutar la inserción en Laptop
+                instruccionLaptop.executeUpdate(); 
                 System.out.println("Laptop agregada exitosamente.");
             }
         }
@@ -66,7 +65,7 @@ public class LaptopDAO {
 }
 
     public void eliminarLaptop(int id) {
-    // Paso 1: Obtener el stock actual
+    
     String selectSQL = "SELECT stock FROM Producto WHERE id = ?";
     int stockActual = 0;
 
@@ -78,12 +77,12 @@ public class LaptopDAO {
             stockActual = rs.getInt("stock");
         }
 
-        // Paso 2: Restar uno al stock
+        
         stockActual -= 1;
 
-        // Paso 3: Actualizar el stock o eliminar el producto
+        
         if (stockActual > 0) {
-            // Actualizar el stock
+            
             String updateSQL = "UPDATE Producto SET stock = ? WHERE id = ?";
             PreparedStatement updateStmt = conexion.prepareStatement(updateSQL);
             updateStmt.setInt(1, stockActual);
@@ -91,7 +90,7 @@ public class LaptopDAO {
             updateStmt.executeUpdate();
             System.out.println("Stock actualizado exitosamente.");
         } else {
-            // Eliminar de Laptop y Producto si el stock es 0
+            
             String deleteLaptopSQL = "DELETE FROM Laptop WHERE producto_id = ?";
             PreparedStatement deleteLaptopStmt = conexion.prepareStatement(deleteLaptopSQL);
             deleteLaptopStmt.setInt(1, id);

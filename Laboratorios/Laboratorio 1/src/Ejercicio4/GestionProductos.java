@@ -51,20 +51,20 @@ public class GestionProductos {
 
             switch (opcion) {
                 case 1:
-                    // Implementar la lógica para mostrar productos
+                    
                     imprimirProductos(inventario.listarProductos());
                     break;
                 case 2:
                     inventario.agregarProducto();
                     break;
                 case 3:
-                    // Implementar la lógica para eliminar un producto
+                    
                     System.out.print("Ingrese el id: ");
                     int id = scanner.nextInt();
                     inventario.eliminarProducto(id);
                     break;
                 case 4:
-                    // Implementar la lógica para mostrar el precio total del stock
+                    
                     int total = inventario.precioTotalStock();
                     System.out.println("El total de los productos en stock es " + total + " Bs.");
                     break;
