@@ -1,4 +1,4 @@
-package com.mycompany.soquettcp;
+package tareatema3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,30 +16,41 @@ public class Servidor {
         try {
             server = new ServerSocket(port);
             System.out.println("Se inició el servidor con éxito");
+            while (true){
             Socket client;
             PrintStream toClient;
             client = server.accept();
-            System.out.println("Cliente conectado");
-
             BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            String recibido = fromClient.readLine();
-            System.out.println("El cliente envió el mensaje: " + recibido);
-
-            // Convertir el mensaje a un número entero
-            int numero = Integer.parseInt(recibido);
-
-            // Calcular el factorial
-            int resultadoFactorial = calcularFactorial(numero);
-
-            // Enviar el resultado de vuelta al cliente
+            System.out.println("Cliente conectado");
+            String operacion = fromClient.readLine();
+            String num = fromClient.readLine();
+            int n = Integer.parseInt(num);
+            Operaciones operador = new Operaciones();
+            String mensaje = "";
+            switch (operacion){
+                case "fac":
+                    
+                    mensaje = "El Factorial es: " + Operaciones.calcularFactorial(n);
+                    break;
+                case "fibo":
+                    mensaje = "El Fibonacci es: " + Operaciones.calcularFibonacci(n);
+                    break;
+                case "sum":
+                    mensaje = "La Sumatoria es: " + Operaciones.calcularSumatoria(n);
+                    break;
+                default:
+                    mensaje = "DEBES ESCOGER UNA OPERACION VALIDA";
+                            
+            }
+            
+            
             toClient = new PrintStream(client.getOutputStream());
-            toClient.println("El factorial de " + numero + " es: " + resultadoFactorial);
-
+            toClient.println(mensaje);
+            }
             // Cerrar las conexiones
-            fromClient.close();
-            toClient.close();
-            client.close();
-
+            //fromClient.close();
+            //toClient.close();
+            //client.close();
         } catch (IOException ex) {
             System.out.print(ex.getMessage());
         }

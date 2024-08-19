@@ -21,7 +21,14 @@ public class ClienteGabo {
             PrintStream toServer = new PrintStream(client.getOutputStream());
             Scanner fromServer = new Scanner(client.getInputStream());
             Scanner sc = new Scanner(System.in);
-            System.out.println("Ingrese el primer numero: ");
+            System.out.println("Ingrese la operacion fac/fib/sum");
+            String operacion = sc.nextLine();
+            toServer.println(operacion);
+            String resultado = fromServer.nextLine();
+            if (resultado.equals("ok")){
+                System.out.println("Introduzca n");
+                String result2 = 
+            }
             String dat1 = sc.nextLine();
             System.out.println("Ingrese el primer numero: ");
             String dat2 = sc.nextLine();

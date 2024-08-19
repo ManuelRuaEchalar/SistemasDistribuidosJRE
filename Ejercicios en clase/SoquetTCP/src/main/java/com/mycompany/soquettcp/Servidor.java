@@ -19,12 +19,12 @@ public class Servidor {
     
     public static void main(String[] args){
     
-        int port = 502;
+        int port = 5002;
         ServerSocket server;
-        
         try {
             server = new ServerSocket(port);
             System.out.println("Se inicio el servidor con exito");
+            while(true){
             Socket client;
             PrintStream toClient;
             client = server.accept();
@@ -35,13 +35,13 @@ public class Servidor {
             System.out.println(recibido);
             toClient = new PrintStream(client.getOutputStream());
             toClient.println("Hola Mundo desde el servidor");
-            
+            }
         } catch (IOException ex){
             System.out.print(ex.getMessage());
             
             
             
         }
-    }
     
+    }
 }

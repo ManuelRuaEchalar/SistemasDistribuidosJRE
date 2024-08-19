@@ -22,7 +22,7 @@ public class Cliente {
             Socket client = new Socket("localhost", port);
             PrintStream toServer = new PrintStream(client.getOutputStream());
             BufferedReader fromServer = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            toServer.println("Hola Mundo desde el cliente");
+            toServer.println("EL CLIENTE DICE QUE QUIERE MASA");
             String result = fromServer.readLine();
             System.out.println("Cadena devuelta por el servidor es: " + result);
             

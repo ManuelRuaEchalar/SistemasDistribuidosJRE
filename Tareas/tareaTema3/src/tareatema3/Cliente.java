@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  *
@@ -20,12 +21,19 @@ public class Cliente {
         int port = 5002;
         try {
             Socket client = new Socket("localhost", port);
-            PrintStream toServer = new PrintStream(client.getOutputStream());
-            BufferedReader fromServer = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            toServer.println("Hola Mundo desde el cliente");
-            String result = fromServer.readLine();
-            System.out.println("Cadena devuelta por el servidor es: " + result);
-            
+            Scanner sc = new Scanner(System.in);
+            while (true){
+                PrintStream toServer = new PrintStream(client.getOutputStream());
+                BufferedReader fromServer = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                System.out.println("Ingrese la operacion fac/fibo/sum");
+                String operacion = sc.nextLine();
+                toServer.println(operacion);
+                System.out.println("Ingrese un número: ");
+                String num = sc.nextLine();
+                toServer.println(num);
+                String result = fromServer.readLine();
+                System.out.println(result);
+            }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
