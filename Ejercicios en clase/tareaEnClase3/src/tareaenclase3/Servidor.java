@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.soquettcp;
+package tareaenclase3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +12,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Servidor {
-
-    private static String ultimoN = ""; // Último valor de 'n' procesado, debe estar fuera del método main
-
     public static void main(String[] args) {
         try {
             int port = 5002;
@@ -25,16 +22,17 @@ public class Servidor {
                 Socket client = server.accept();
                 BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 PrintStream toClient = new PrintStream(client.getOutputStream());
-
+                
                 System.out.println("Cliente se conectó");
                 System.out.println("Bienvenido al Servidor de la materia SIS258");
 
                 String mensaje = fromClient.readLine();
-
+                
                 String[] parts = mensaje.split("-");
                 String opcion = parts[0];
                 String n = parts.length > 1 ? parts[1] : "";  // Si existe un valor después de "-", lo toma
-
+                
+                static String ultimoN = ""; // Último valor de 'n' procesado
                 String resultado = "";
 
                 if (!n.isEmpty()) {

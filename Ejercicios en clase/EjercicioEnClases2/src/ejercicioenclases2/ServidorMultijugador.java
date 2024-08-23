@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ServidorMultijugador {
     private static final int PUERTO = 5056;
-    private static final String[] PALABRAS = {"java", "programacion", "computadora", "algoritmo", "desarrollo"};
+    private static final String[] PALABRAS = {"ahorcado", "juego", "palabra", "arbol", "mentira"};
     private static final int MAX_ERRORES = 7;
 
     public static void main(String[] args) {
